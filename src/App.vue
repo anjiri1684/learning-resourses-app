@@ -6,14 +6,12 @@
 
 <script>
 import TheHeader from './components/layouts/TheHeader.vue';
-import AddResources from './components/learning-resources/AddResources.vue';
 import TheResources from './components/learning-resources/TheResource.vue';
 
 export default {
   components: {
     TheHeader,
     TheResources,
-    AddResources,
   },
 };
 </script>

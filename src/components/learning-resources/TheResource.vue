@@ -6,12 +6,12 @@
       >Stored Resources</base-button
     >
     <base-button
-      @click="setSelectedTab('add-resource')"
+      @click="setSelectedTab('add-resources')"
       :mode="addResButtonMode"
       >Add Resource</base-button
     >
   </base-card>
-  <component :is="selectedTab"></component>
+  <keep-alive> <component :is="selectedTab"></component> </keep-alive>
 </template>
 
 <script>
@@ -46,13 +46,14 @@ export default {
       return this.selectedTab === 'stored-resources' ? null : 'flat';
     },
     addResButtonMode() {
-      return this.selectedTab === 'add-resource' ? null : 'flat';
+      return this.selectedTab === 'add-resources' ? null : 'flat';
     },
   },
   provide() {
     return {
       resources: this.storedResources,
       addResource: this.addResource,
+      deleteResource: this.removeResources,
     };
   },
   methods: {
@@ -69,6 +70,12 @@ export default {
       this.storedResources.push(newResource);
       this.selectedTab = 'stored-resources';
       this.$emit('resource-added', newResource);
+    },
+    removeResources(resId) {
+      const resIndex = this.storedResources.findIndex(
+        (res) => res.id === resId
+      );
+      this.storedResources.splice(resIndex, 1);
     },
   },
 };
