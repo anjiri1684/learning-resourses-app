@@ -16,12 +16,11 @@
 
 <script>
 import storedResources from './storedResources.vue';
-import addResource from './addResource.vue';
-
+import AddResources from './AddResources.vue';
 export default {
   components: {
     storedResources,
-    addResource,
+    AddResources,
   },
   data() {
     return {
@@ -53,11 +52,23 @@ export default {
   provide() {
     return {
       resources: this.storedResources,
+      addResource: this.addResource,
     };
   },
   methods: {
     setSelectedTab(tab) {
       this.selectedTab = tab;
+    },
+    addResource(title, description, link) {
+      const newResource = {
+        id: new Date().toISOString(),
+        title,
+        description,
+        link,
+      };
+      this.storedResources.push(newResource);
+      this.selectedTab = 'stored-resources';
+      this.$emit('resource-added', newResource);
     },
   },
 };
